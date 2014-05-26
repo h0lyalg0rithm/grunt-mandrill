@@ -14,7 +14,7 @@ module.exports = function(grunt){
     if(typeof options.recipient === "string"){
       to = [options.recipient];
     }else{
-      to = _.map(options.recipient, function(email){ return { email: email } });
+      _.map(options.recipient, function(email){ to.push(email); });
     }
 
     // If file is present

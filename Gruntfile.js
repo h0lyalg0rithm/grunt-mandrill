@@ -7,12 +7,12 @@ module.exports = function(grunt) {
       mailer: {
         options: {
           key: '', // Enter your Mailgun API key here
-          sender: 'surajshirvankar@gmail.com', // Change this
-          recipient: 'surajshirvankar@gmail.com', // Change this
+          sender: '', // sender email address
+          recipient: [''], // recipient email address
           subject: 'This is a test email'//,
-          // body: 'More data' Use if you want to send text
+          body: 'body of text email' //Use if you want to send text
         },
-        src: []//Location of file to use as html template
+        // src: []//Location of file to use as html template
       }
     }
   })
