@@ -1,0 +1,30 @@
+{
+  "name": "grunt-mandrill",
+  "version": "0.0.1",
+  "description": "Grunt Plugin to send email using mandrill",
+  "main": "Gruntfile.js",
+  "licenses": [
+    {
+      "type": "Apache",
+      "url": "https://github.com/h0lyalg0rithm/grunt-mandrill/blob/master/LICENSE"
+    }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/h0lyalg0rithm/grunt-mandrill.git"
+  },
+  "author": "Suraj Shirvankar",
+  "license": "Apache",
+  "bugs": {
+    "url": "https://github.com/h0lyalg0rithm/grunt-mandrill/issues"
+  },
+  "homepage": "https://github.com/h0lyalg0rithm/grunt-mandrill",
+  "dependencies": {
+    "node-mandrill": "^1.0.1",
+    "lodash": "^2.4.1"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.2",
+    "node-mandrill": "^1.0.1"
+  }
+}
