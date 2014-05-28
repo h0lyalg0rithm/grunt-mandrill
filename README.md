@@ -82,6 +82,6 @@ module.exports = function(grunt){
     }
   });
   
-  grunt.loadNpmTasks 'grunt-mandrill'
+  grunt.loadNpmTasks('grunt-mandrill');
   });
 ```
