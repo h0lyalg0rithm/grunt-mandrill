@@ -10,7 +10,6 @@ module.exports = function(grunt){
     // Setup node-mandrill with the api
     mandrill = mandrill(this.data.options.key);
     var to = [];
-    var i = this.files.length;
     if(typeof options.recipient === "string"){
       to = [options.recipient];
     }else{
@@ -18,7 +17,7 @@ module.exports = function(grunt){
     }
 
     // If file is present
-    if(this.files.length > 0){
+    if(this.filesSrc.length > 0){
       _.each(this.filesSrc,function(path){
         _.each(to, function(recp){
           if(!options.body){ 
