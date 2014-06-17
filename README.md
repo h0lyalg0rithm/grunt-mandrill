@@ -76,9 +76,9 @@ module.exports = function(grunt){
           sender: 'noreply@testsauce.biz',
           recipient: 'email.you.want.to.send.to@email.com'.
           subject: 'This is a test email'
-        }
-      },
-      src: ['templates/*.html']
+        },
+        src: ['templates/*.html']
+      }
     }
   });
   
