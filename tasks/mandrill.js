@@ -1,4 +1,4 @@
-var mandrill = require('node-mandrill'),
+var mandrill = require('mandrill-api'),
     _        = require('lodash');
 
 
@@ -6,57 +6,53 @@ var mandrill = require('node-mandrill'),
 module.exports = function(grunt){
   grunt.registerMultiTask('mandrill','Send email using mandrill', function(){
     var done = this.async();
-    var options = _.pick(this.data.options,['sender', 'recipient', 'subject', 'body']);
+    var options = _.pick(this.data.options,['sender', 'recipient', 'subject', 'body','async']);
     // Setup node-mandrill with the api
-    mandrill = mandrill(this.data.options.key);
+    mandrill = new mandrill.Mandrill(this.data.options.key);
     var to = [];
     if(typeof options.recipient === "string"){
       to = [options.recipient];
     }else{
-      _.map(options.recipient, function(email){ to.push(email); });
+      to = options.recipient;
     }
+    options.async = typeof options.async !== 'undefined' ? options.async: true;
+    var ip_pool = "Main Pool";
 
     // If file is present
     if(this.filesSrc.length > 0){
       _.each(this.filesSrc,function(path){
-        _.each(to, function(recp){
-          if(!options.body){ 
-            options.body = grunt.file.read(path);
-          }
-          mandrill(
-            '/messages/send',{
-              message:{
-                to: [{email: recp}],
-                from_email: options.sender,
-                subject: options.subject,
-                html: options.body
-              }
-            }, 
-            function(err, response){
-              if(err) grunt.log.writeln("Could not send email to " + recp);
-              grunt.log.writeln('Sent email msg to ' + options.recipient);
-            });
-        });
+          options.body = grunt.file.read(path);
+          send_to_many(grunt,mandrill,to,options);
       });
     }else{
-        _.each(to, function(recp){
-          if(!options.body){ 
-            options.body = grunt.file.read(path);
-          }
-          mandrill(
-            '/messages/send',{
-            message: {
-                to: [{email: recp}],
-                from_email: options.sender,
-                subject: options.subject,
-                html: options.body
-              }
-            }, 
-            function(err,response){
-              if(err) grunt.log.writeln("Could not send email to " + recp);
-              grunt.log.writeln('Sent email msg to ' + options.recipient);
-            });
-        });
+      send_to_many(grunt,mandrill,to,options);
     }
+  });
+}
+
+function send_to_many(grunt,client,recipients,options){
+  _.each(recipients, function(recipient){
+    send_email(grunt,client,recipient,options);
+  });
+}
+function send_email(grunt,client,recipient,options){
+  var message = {
+    "html": options.body,
+    "subject": options.subject,
+    "from_email": options.sender,
+    "to": [{
+            "email": recipient,
+            "type": "to"
+        }],
+    "headers": {
+      "Reply-To": options.sender
+    }
+  };
+  client.messages.send({"message": message, "async": options.async}, function(result) {
+      grunt.log.writeln('Sent email msg to ' + result[0].email);
+  }, function(e) {
+      // Mandrill returns the error as an object with name and message keys
+      grunt.log.writeln('A mandrill error occurred: ' + e.name + ' - ' + e.message);
+      // A mandrill error occurred: Unknown_Subaccount - No subaccount exists with the id 'customer-123'
   });
 }
