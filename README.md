@@ -74,14 +74,14 @@ module.exports = function(grunt){
         options: {
           key: 'your-mandrill-API-key',
           sender: 'noreply@testsauce.biz',
-          recipient: 'email.you.want.to.send.to@email.com'.
+          recipient: 'email.you.want.to.send.to@email.com',
           subject: 'This is a test email'
         },
         src: ['templates/*.html']
       }
     }
   });
-  
+
   grunt.loadNpmTasks('grunt-mandrill');
   });
 ```
