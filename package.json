@@ -20,10 +20,12 @@
   },
   "homepage": "https://github.com/h0lyalg0rithm/grunt-mandrill",
   "dependencies": {
+    "async": "^1.5.2",
     "lodash": "^2.4.1",
     "mandrill-api": "^1.0.40"
   },
   "devDependencies": {
+    "async": "^1.5.2",
     "grunt": "~0.4.2",
     "mandrill-api": "^1.0.40"
   },
